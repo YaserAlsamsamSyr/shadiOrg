@@ -3,37 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FormmRequest;
 use App\Http\Resources\FormResource;
 use App\Http\Resources\FormsResource;
 use App\Models\Form;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules;
 
 class FormController extends Controller
 {
-    public function create(FormmRequest $req){
+    public function create(Request $req){
         try{
-           $newForm=new Form();
-           $newForm->firstName=$req->firstName;
-           $newForm->lastName=$req->lastName;
-           $newForm->fatherName=$req->fatherName;
-           $newForm->motherName=$req->motherName;
-           $newForm->iss=$req->iss;
-           $newForm->birthDate=$req->birthDate;
-           $newForm->birthDateArea=$req->birthDateArea;
-           $newForm->joinType=$req->joinType;
-           $newForm->user_id=auth()->user()->id;
-           $newForm->save();
-           session(['created' => true]);
-           return redirect()->route('index') ?? "there are something wrong";
+            $validated =  Validator::make($req->all(), [            
+                "firstName"=>['required', 'string','max:300'],
+                "lastName"=>['required', 'string','max:300'],
+                "fatherName"=>['required', 'string','max:300'],
+                "motherName"=>['required', 'string','max:300'],
+                "iss"=>['required', 'string','regex:/^[0-9]{11}$/'],
+                "birthDate"=>['required', 'string','max:255'],
+                "birthDateArea"=>['required', 'string','max:500'],
+                "joinType"=>['required', 'string','max:600'],
+            ]);
+            if ($validated->fails()) {
+                return redirect()->route('index')
+                    ->withErrors($validated)
+                    ->withInput();
+            }
+            $newForm=new Form();
+            $newForm->firstName=$req->firstName;
+            $newForm->lastName=$req->lastName;
+            $newForm->fatherName=$req->fatherName;
+            $newForm->motherName=$req->motherName;
+            $newForm->iss=$req->iss;
+            $newForm->birthDate=$req->birthDate;
+            $newForm->birthDateArea=$req->birthDateArea;
+            $newForm->joinType=$req->joinType;
+            $newForm->user_id=auth()->user()->id;
+            $newForm->save();
+            session(['created' => true]);
+            return redirect()->route('index') ?? "there are something wrong";
         }catch(Exception $err){
             return response()->json(["message"=>"there are something wrong"],500);
         }
     }
     public function getMyForms(){
         try{
-            $myForms=FormResource::collection(auth()->user()->forms);
+            $myForms=FormResource::collection(auth()->user()->forms()->paginate(10));
             return view('app.myForms',['myForms'=>$myForms]);
          }catch(Exception $err){
              return response()->json(["message"=>$err->getMessage()],500);
@@ -74,7 +90,7 @@ class FormController extends Controller
     public function formWait(){
         try{
             $formType="اللإستمارات قيد الإنتظار";
-            $Forms=FormsResource::collection(Form::where('status','إنتظار')->paginate(1));
+            $Forms=FormsResource::collection(Form::where('status','إنتظار')->paginate(10));
             return view('app.forms',['formType'=>$formType,'forms'=>$Forms]);
         } catch(Exception $err){
            return response()->json(['message'=>$err->getMessage(),500]);

@@ -24,16 +24,8 @@
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                                                     <!---->
                     {{-- <div class="col-12" style="direction:rtl"> --}}
-                        <p  class="nav-item nav-link" style="color: rgb(95, 240, 95) !important;">
-                            @if(@session('created'))
-                                تم إرسال الطلب بنجاح
-                                {{ Session::put('created', false) }}
-                            @endif
-                            @if(@session('repassword'))
-                                تم تعديل كلمة سر
-                                {{ Session::put('repassword', false) }}
-                            @endif
-                        </p>
+
+                        {{--  --}}
                     {{-- </div> --}}
                     <a href="{{ route("index") }}" class="nav-item nav-link active">الرئيسية</a>
                     @if(Route::current()->getName() == 'index')
@@ -69,5 +61,40 @@
                 </div>  
             </div>
         </nav>
-    </div>
+
+{{--  --}}
+    <div class="row"><div class="col-1"></div><div class="col-11 display-6">
+        @if(@session('created'))
+            <p  class="nav-item nav-link" style="color: rgb(95, 240, 95) !important;">
+                تم إرسال الطلب بنجاح
+                {{ Session::put('created', false) }}
+            </p>
+        @endif
+        @if(@session('repassword'))
+            <p  class="nav-item nav-link" style="color: rgb(95, 240, 95) !important;">
+                تم تعديل كلمة سر
+                {{ Session::put('repassword', false) }}
+            </p>
+        @endif
+        @if(Route::current()->getName() == 'index')
+            @if($errors->has('firstName'))
+            <p  class="nav-item nav-link" style="color:red!important;">{{ $errors->first('firstName') }}</p>
+            @elseif($errors->has('lastName'))
+            <p  class="nav-item nav-link" style="color:red!important;">{{ $errors->first('lastName') }}</p>
+            @elseif($errors->has('motherName'))
+            <p  class="nav-item nav-link" style="color:red!important;">{{ $errors->first('motherName') }}</p>
+            @elseif($errors->has('fatherName'))
+            <p  class="nav-item nav-link" style="color:red!important;">{{ $errors->first('fatherName') }}</p>
+            @elseif($errors->has('birthDateArea'))
+            <p  class="nav-item nav-link" style="color:red!important;">{{ $errors->first('birthDateArea') }}</p>
+            @elseif($errors->has('birthDate'))
+            <p  class="nav-item nav-link" style="color:red!important;">{{ $errors->first('birthDate') }}</p>
+            @elseif ($errors->has('iss'))
+            <p  class="nav-item nav-link" style="color:red!important;">{{ $errors->first('iss') }}</p>
+            @elseif($errors->has('joinType'))
+                 <p  class="nav-item nav-link" style="color:red!important;">{{ $errors->first('joinType') }}</p>
+            @endif
+        @endif
+    </div></div>
+</div>
     <!-- Navbar End -->

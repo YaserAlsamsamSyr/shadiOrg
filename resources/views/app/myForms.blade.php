@@ -109,6 +109,13 @@
                     </div>
                 @endforeach
             </div>
+            <div class="row mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <div class="col-md-12">    
+                    <br>
+                    {{-- <h3>{{ $forms->links() }}</h3> --}}
+                    @include('layouts.paginate',['paginator'=>$myForms])
+                </div>
+            </div>
         </div>
     </div>
     <!-- Testimonial End -->

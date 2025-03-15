@@ -34,7 +34,6 @@
            font-size: 20px;
         }  
         td {
-            font-size: 22px;
            padding-top: 10px;
            padding-bottom: 20px;
            padding-left: 30px;
@@ -153,9 +152,16 @@
                        <h2 style="color:red!important">لايوجد إستمارات</h2> 
                     @endforelse
             </div>
+            <div class="row mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <div class="col-md-12">    
+                    <br>
+                    {{-- <h3>{{ $forms->links() }}</h3> --}}
+                    @include('layouts.paginate',['paginator'=>$forms])
+                </div>
+            </div>
         </div>
     </div>
-    {{ $forms->onEachSide(5)->links() }}
+
     <!-- Testimonial End -->
 
 

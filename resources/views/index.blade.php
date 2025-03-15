@@ -348,7 +348,7 @@
                                             <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                                                 <i class="fa fa-arrow-right"></i>
                                             </div>
-                                            إرسال
+                                            قم بتسجيل الدخول  أولا
                                         </button>
                                     </div>
                                 @endguest
@@ -359,23 +359,6 @@
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                     {{-- <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Donate Now</div> --}}
                     <h1 class="display-3 text-white mb-5" style="text-align:center">إنضم إلينا</h1>
-                    @if($errors->get('firstName'))
-                         <x-input-error :messages="$errors->get('firstName')" class="mt-2" />
-                    @elseif($errors->get('lastName'))
-                         <x-input-error :messages="$errors->get('lastName')" class="mt-2" />
-                    @elseif($errors->get('motherName'))
-                         <x-input-error :messages="$errors->get('motherName')" class="mt-2" />
-                    @elseif($errors->get('fatherName'))
-                         <x-input-error :messages="$errors->get('fatherName')" class="mt-2" />
-                    @elseif($errors->get('birthDateArea'))
-                         <x-input-error :messages="$errors->get('birthDateArea')" class="mt-2" />
-                    @elseif($errors->get('birthDate'))
-                         <x-input-error :messages="$errors->get('birthDate')" class="mt-2" />
-                    @elseif ($errors->get('iss'))
-                         <x-input-error :messages="$errors->get('iss')" class="mt-2" />
-                    @elseif($errors->get('joinType'))
-                         <x-input-error :messages="$errors->get('joinType')" class="mt-2" />
-                    @endif
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Validator;
 
 class AppController extends Controller
 {
@@ -26,9 +27,15 @@ class AppController extends Controller
     }
     public function userUpdatePassword(Request $req){
         try{
-            $req->validate([
+            session(['id' => $req->user]);
+            $validated =  Validator::make($req->all(), [
                 'password' => ['required', Rules\Password::defaults()],
             ]);
+            if ($validated->fails()) {
+                return redirect()->route('users')
+                    ->withErrors($validated)
+                    ->withInput();
+            }
             $user=User::find($req->user);
             if(!$user)
                 return response()->json(['message'=>'there are something wrong',422]);
