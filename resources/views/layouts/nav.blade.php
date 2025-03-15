@@ -22,26 +22,42 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
+                                                    <!---->
+                    {{-- <div class="col-12" style="direction:rtl"> --}}
+                        <p  class="nav-item nav-link" style="color: rgb(95, 240, 95) !important;">
+                            @if(@session('created'))
+                                تم إرسال الطلب بنجاح
+                                {{ Session::put('created', false) }}
+                            @endif
+                            @if(@session('repassword'))
+                                تم تعديل كلمة سر
+                                {{ Session::put('repassword', false) }}
+                            @endif
+                        </p>
+                    {{-- </div> --}}
                     <a href="{{ route("index") }}" class="nav-item nav-link active">الرئيسية</a>
+                    @if(Route::current()->getName() == 'index')
+                        <a href="#iamhere" class="nav-item nav-link">إنضم إلينا</a>
+                    @endif
                     @auth
                         @if(Auth::user()->role=="addmin*")
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">admin</a>
                                 <div class="dropdown-menu m-0">
-                                    <a href="service.html" class="dropdown-item">استمارات قيد لإنتظار</a>
-                                    <a href="donate.html" class="dropdown-item">الإستمارات المقبولة</a>
-                                    <a href="team.html" class="dropdown-item">الإستمارات المرفوضة</a>
-                                    <a href="testimonial.html" class="dropdown-item">حسابات المستخدمين</a>
+                                    <a href="{{ route('form.wait') }}" class="dropdown-item">استمارات قيد لإنتظار</a>
+                                    <a href="{{ route('form.true') }}" class="dropdown-item">الإستمارات المقبولة</a>
+                                    <a href="{{ route('form.false') }}" class="dropdown-item">الإستمارات المرفوضة</a>
+                                    <a href="{{ route('users') }}" class="dropdown-item">حسابات المستخدمين</a>
                                     {{-- <a href="404.html" class="dropdown-item">404 Page</a> --}}
                                 </div>
                             </div>
                         @endif
-                        <a href="about.html" class="nav-item nav-link">استماراتي</a>
+                        <a href="{{ route('getMyForms') }}" class="nav-item nav-link">استماراتي</a>
                         <a href="{{ route('profile.edit') }}" class="nav-item nav-link">ملفي شخصي</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <a href="about.html" class="nav-item nav-link"href="{{ route('logout') }}"
+                            <a href="about.html" class="nav-item nav-link" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                         this.closest('form').submit();">تسجيل الخروج</a>
                         </form>

@@ -26,7 +26,7 @@ class FormmRequest extends FormRequest
             "lastName"=>['required', 'string','max:300'],
             "fatherName"=>['required', 'string','max:300'],
             "motherName"=>['required', 'string','max:300'],
-            "iss"=>['required', 'string','regex:/^[0-9]{11}$)/'],
+            "iss"=>['required', 'string','regex:/^[0-9]{11}$/'],
             "birthDate"=>['required', 'string','max:255'],
             "birthDateArea"=>['required', 'string','max:500'],
             "joinType"=>['required', 'string','max:600'],

@@ -265,70 +265,93 @@
 
 
     <!-- Donate Start -->
-    <div class="container-fluid donate my-5 py-5" data-parallax="scroll" data-image-src="img/carousel-2.jpg">
+    <div class="container-fluid donate my-5 py-5" data-parallax="scroll" data-image-src="img/carousel-2.jpg" id="iamhere">
         <div class="container py-5">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                     <div class="h-100 bg-white p-5">
-                        <form>
+                        <form method="post" action="{{ route('createForm') }}">
+                            @csrf
                             <div class="row g-3">
-                                <!---->
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0 text-end" id="name" placeholder="Your Name">
+                                        <input type="text" name="firstName" class="form-control bg-light border-0 text-end" id="name" required>
                                         <label for="name">الأسم</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0 text-end" id="email" placeholder="Your Email">
+                                        <input type="text" name="lastName" class="form-control bg-light border-0 text-end" id="email" required>
                                         <label for="email">الكنية</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0 text-end" id="name" placeholder="Your Name">
+                                        <input type="text" name="motherName" class="form-control bg-light border-0 text-end" id="name" required>
                                         <label for="name">اسم لأم</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0 text-end" id="email" placeholder="Your Email">
+                                        <input type="text" name="fatherName" class="form-control bg-light border-0 text-end" id="email" required>
                                         <label for="email">اسم لأب</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0 text-end" id="name" placeholder="Your Name">
+                                        <input type="text" name="birthDateArea" class="form-control bg-light border-0 text-end" id="name" required>
                                         <label for="name">مكان الولادة</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input type="date" class="form-control bg-light border-0 text-end" id="email" placeholder="Your Email">
+                                        <input type="date" name="birthDate" class="form-control bg-light border-0 text-end" id="email" required>
                                         <label for="email">تاريخ الولادة</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control bg-light border-0 text-end" id="name" placeholder="Your Name">
+                                        <input type="number" name="iss" class="form-control bg-light border-0 text-end" id="name" required>
                                         <label for="name">الرقم الوطني</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0 text-end" id="email" placeholder="Your Email">
+                                        <input type="text" name="joinType" class="form-control bg-light border-0 text-end" required id="email">
                                         <label for="email">المجال المراد التطوع به</label>
                                     </div>
                                 </div>
-                                <div class="col-12" style="direction:rtl">
-                                    <button class="btn btn-primary px-5" style="height: 60px;">
-                                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                                            <i class="fa fa-arrow-right"></i>
+                                @auth
+                                    @if (count(auth()->user()->forms)>=1)
+                                        <div class="col-12" style="direction:rtl">
+                                            <div class="btn btn-primary px-5" style="height: 60px;">
+                                                <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                                    <i class="fa fa-arrow-right"></i>
+                                                </div>
+                                                قمت بإرسال طلب من قبل
+                                            </div>
                                         </div>
-                                        إرسال
-                                    </button>
-                                </div>
+                                    @else
+                                        <div class="col-12" style="direction:rtl">
+                                            <button class="btn btn-primary px-5" style="height: 60px;">
+                                                <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                                    <i class="fa fa-arrow-right"></i>
+                                                </div>
+                                                إرسال
+                                            </button>
+                                        </div>
+                                    @endif
+                                @endauth
+                                @guest
+                                    <div class="col-12" style="direction:rtl">
+                                        <button class="btn btn-primary px-5" style="height: 60px;">
+                                            <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                                <i class="fa fa-arrow-right"></i>
+                                            </div>
+                                            إرسال
+                                        </button>
+                                    </div>
+                                @endguest
                             </div>
                         </form>
                     </div>
@@ -336,7 +359,23 @@
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                     {{-- <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Donate Now</div> --}}
                     <h1 class="display-3 text-white mb-5" style="text-align:center">إنضم إلينا</h1>
-                    {{-- <p class="text-white-50 mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p> --}}
+                    @if($errors->get('firstName'))
+                         <x-input-error :messages="$errors->get('firstName')" class="mt-2" />
+                    @elseif($errors->get('lastName'))
+                         <x-input-error :messages="$errors->get('lastName')" class="mt-2" />
+                    @elseif($errors->get('motherName'))
+                         <x-input-error :messages="$errors->get('motherName')" class="mt-2" />
+                    @elseif($errors->get('fatherName'))
+                         <x-input-error :messages="$errors->get('fatherName')" class="mt-2" />
+                    @elseif($errors->get('birthDateArea'))
+                         <x-input-error :messages="$errors->get('birthDateArea')" class="mt-2" />
+                    @elseif($errors->get('birthDate'))
+                         <x-input-error :messages="$errors->get('birthDate')" class="mt-2" />
+                    @elseif ($errors->get('iss'))
+                         <x-input-error :messages="$errors->get('iss')" class="mt-2" />
+                    @elseif($errors->get('joinType'))
+                         <x-input-error :messages="$errors->get('joinType')" class="mt-2" />
+                    @endif
                 </div>
             </div>
         </div>

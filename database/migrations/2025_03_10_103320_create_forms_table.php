@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("birthDate");
             $table->string("birthDateArea");
             $table->string("joinType");
-            $table->string("status")->default("wait");
+            $table->string("status")->default("إنتظار");
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->timestamps();
         });
