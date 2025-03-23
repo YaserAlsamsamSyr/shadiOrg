@@ -1,4 +1,3 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/gdcasyria/public_html/
-    - /resources/views/cp index.blade.php $DEPLOYPATH
+    - /home/gdcasyria/public_html/resources/views/cp index.blade.php
