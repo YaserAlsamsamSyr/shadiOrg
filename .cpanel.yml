@@ -1,6 +1,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/gdcasyria/public_html/
-    - /cp -R .vscode $DEPLOYPATH
-    - /cp -R assets $DEPLOYPATH
-    - /cp index.html $DEPLOYPATH
+    - /resources/views/cp index.blade.php $DEPLOYPATH
